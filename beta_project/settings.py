@@ -24,6 +24,9 @@ INSTALLED_APPS = [
 
     # Dima Shendryk`s app
     'insane_app',
+
+    # Vadim Goloviychuk's app
+    'rent_cars'
 ]
 
 MIDDLEWARE = [
