@@ -10,8 +10,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "NOT_EMPTY")
 
 DEBUG = True
 
-AUTH_USER_MODEL = 'insane_app.InsaneUser'
-
 ALLOWED_HOSTS = []
 
 # Application definition

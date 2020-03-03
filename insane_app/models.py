@@ -1,6 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 class SanityRank(models.Model):
     name = models.CharField(unique=True, max_length=20)
@@ -10,40 +14,58 @@ class SanityRank(models.Model):
         return self.name
 
 
-class InsaneUser(AbstractUser):
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     sanity = models.PositiveIntegerField(default=0)
     rank = models.ForeignKey(SanityRank, null=True, on_delete=models.PROTECT)
 
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            rank = SanityRank.objects.first()
+            Profile.objects.create(user=instance, sanity=rank.sanity_cap, rank=rank)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
+
     class Meta:
-        ordering = ['username']
+        ordering = ['user']
         db_table = 'insane_user'
 
     def __str__(self):
-        return self.username
+        return self.user.username
 
 
 class UserGroup(models.Model):
     name = models.CharField(max_length=32)
-    administrator = models.ForeignKey(
-        InsaneUser,
+    admin = models.ForeignKey(
+        User,
         related_name='admined_group',
         on_delete=models.SET_NULL,
         null=True
     )
     members = models.ManyToManyField(
-        InsaneUser,
+        User,
         related_name='user_group',
         through='Membership',
         through_fields = ('user_group', 'user')
     )
     dt_created = models.DateTimeField(auto_now_add=True)
 
+    def __init__(self, name, admin):
+        self.name = name
+        self.admin = admin
+
     def __str__(self):
         return self.name
 
+    def add_member(self, new_user):
+        Membership.objects.create(user = new_user, user_group=self)
+
 
 class Membership(models.Model):
-    user = models.ForeignKey(InsaneUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     user_group = models.ForeignKey(UserGroup, on_delete=models.CASCADE)
 
     class Meta:
@@ -56,7 +78,7 @@ class Story(models.Model):
     like_count = models.PositiveIntegerField()
     dt_created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
-        InsaneUser,
+        User,
         on_delete=models.SET_NULL,
         null=True
     )
