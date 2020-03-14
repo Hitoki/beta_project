@@ -1,0 +1,230 @@
+{% extends 'cinema/index.html' %}
+
+{% load static %}
+
+{% block title %}Movie News{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <h4>Movie News</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="row mb-2">
+        <div class="col-md-12">
+          <div class="card bg-warning">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <img
+                      src="{% static 'cinema/img/10th_Cambodia_International_Film_Festival.jpg' %}">
+                </div>
+                <div class="col-md-8">
+                  <div class="news-title">
+                    <a href="{% url 'cinema:news-detail' 1 %}"><h5>10th Cambodia
+                      International Film Festival
+                      Starts on March 13th</h5></a>
+                  </div>
+                  <div class="news-cats">
+                    <ul class="list-unstyled list-inline mb-1">
+                      <li class="list-inline-item">
+                        <i class="fa fa-folder-o text-danger"></i>
+                        <a href="#"><small>AsianMoviePulse</small> </a>
+                      </li>
+                      <li class="list-inline-item">
+                        <i class="fa fa-folder-o text-danger"></i>
+                        <a href="#"><small>Rhythm Zaveri</small> </a>
+                      </li>
+                      <li class="list-inline-item">
+                        <i class="fa fa-folder-o text-danger"></i>
+                        <a href="#"><small>12 March 2020</small></a href="#">
+                      </li>
+
+
+                    </ul>
+                  </div>
+                  <div class="news-content">
+                    <p>Cambodia’S Largest International Cultural Event
+                      Celebrates 10 Years!
+
+                      The 10th Ciff presents film from 44 countries through a
+                      selection of 157 films, including short and feature films,
+                      documentaries, and animation.
+
+                      From March 13 to 22nd, Ciff offers 150+ screenings in all
+                      major cinemas of Phnom Penh; venues included this year are
+                      Legend Cinemas, Major Cineplex, Bophana Center, Chaktomuk
+                      Theater, Rosewood Hotel & The Ciff Village @ Echange
+                      Square.
+
+                      Ciff Is Possible Thanks to all partners and industry
+                      supporters and we are glad to announce Cellcard as
+                      Presenting Partner of the Festival.
+
+                      Opening Ceremony On March 13th will host Cellcard’s
+                      Ambassador Suzanna Reth.
+
+                      Cambodian Cinema – Films made-in and About Cambodia
+
+                      Buoyancy
+
+                      – Stories In Cambodia includes fictions related to
+                      Cambodia including the recent feature films shot in the
+                      Kingdom such as Buoyancy (multi Awarded Film in Festivals
+                      around the word) dealing with the topic of human
+                      trafficking in Cambodia and Southeast Asia. Also The
+                      Clock: Spirits Awakening... </p>
+                  </div>
+                  <div class="news-buttons">
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm">
+                      <a href="{% url 'cinema:news-detail' 1 %}">Read More</a>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <img
+                      src="{% static 'cinema/img/Brad_Pitt_Skipped_BAFTAs.jpg' %}">
+                </div>
+                <div class="col-md-8">
+                  <div class="news-title">
+                    <a href="{% url 'cinema:news-detail' 1 %}"><h5>Brad Pitt
+                      Skipped BAFTAs To Be At Daughter’s
+                      Surgery</h5></a>
+                  </div>
+                  <div class="news-cats">
+                    <ul class="list-unstyled list-inline mb-1">
+                      <li class="list-inline-item">
+                        <i class="fa fa-folder-o text-danger"></i>
+                        <a href="#"><small>ET Canada</small> </a>
+                      </li>
+                      <li class="list-inline-item">
+                        <i class="fa fa-folder-o text-danger"></i>
+                        <a href="#"><small>Aynslee Darmon</small> </a>
+                      </li>
+                      <li class="list-inline-item">
+                        <i class="fa fa-folder-o text-danger"></i>
+                        <a href="#"><small>09 March 2020</small></a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="news-content">
+                    <p>Brad Pitt skipped the 2020 Ee British Academy Film Awards
+                      (also known as the BAFTAs) to be with his daughter as she
+                      underwent surgery, Et has learned. In February, Pitt’s
+                      “Once Upon a Time in Hollywood” co-star, Margot Robbie,
+                      read a pre-written acceptance speech on behalf of the
+                      actor when he was announced as the winner of the Best
+                      Supporting Actor statuette at... </p>
+                  </div>
+                  <div class="news-buttons">
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm">
+                      <a href="{% url 'cinema:news-detail' 1 %}">Read More</a>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-12">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">«</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">»</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="row mb-2">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h6>IMDb Charts</h6>
+                    <h5>Top Rated Movies</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="top_rated">
+              <table class="table table-sm table-striped">
+                <tbody>
+                <tr>
+                  <td class="align-middle">1.</td>
+                  <td class="align-middle"><a href="#">The Shawshank
+                    Redemption</a>
+                  </td>
+                  <td class="align-middle">9.2</td>
+                </tr>
+                <tr>
+                  <td class="align-middle">2.</td>
+                  <td class="align-middle"><a href="#">The Godfather</a>
+                  </td>
+                  <td class="align-middle">9.1</td>
+                </tr>
+                <tr>
+                  <td class="align-middle">3.</td>
+                  <td class="align-middle"><a href="#">The Godfather 2</a>
+                  </td>
+                  <td class="align-middle">9.0</td>
+                </tr>
+                <tr>
+                  <td class="align-middle">4.</td>
+                  <td class="align-middle"><a href="#">The Dark Knight</a>
+                  </td>
+                  <td class="align-middle">9.0</td>
+                </tr>
+                <tr>
+                  <td class="align-middle">5.</td>
+                  <td class="align-middle"><a href="#">12 Angry Men</a>
+                  </td>
+                  <td class="align-middle">8.9</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="list-group mb-3">
+              <a href="https://www.imdb.com/chart/top/?ref_=nv_mv_250"
+                 class="h5 align-self-center">The whole list</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

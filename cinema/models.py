@@ -50,9 +50,18 @@ class User(models.Model):
         return self.fullname
 
 
+class OscarAwards(models.Model):
+    value = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.value)
+
+
 class Actor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    oscar_awards = models.IntegerField(default=0)
+    oscar_awards = models.ForeignKey(
+        OscarAwards, on_delete=models.SET_NULL, blank=True, null=True
+    )
 
 
 class Genre(models.Model):
@@ -106,21 +115,39 @@ class Film(models.Model):
         return self.title
 
 
+class NewsSource(models.Model):
+    name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name
+
+
+class NewsAuthor(models.Model):
+    name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.name
+
+
 class News(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField()
     created_at = models.DateTimeField()
     film = models.ManyToManyField(Film)
     actor = models.ManyToManyField(Actor)
+    news_source = models.ForeignKey(NewsSource, on_delete=models.CASCADE)
+    news_author = models.ForeignKey(NewsAuthor, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
 
 
-class Comment(models.Model):
-    author_name = models.CharField(max_length=32)
-    text = models.CharField(max_length=512)
-    news = models.ForeignKey(News, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.author_name
+# class Comment(models.Model):
+#     comment_author = models.CharField(max_length=32)
+#     text = models.CharField(max_length=512)
+#     news = models.ForeignKey(News, on_delete=models.CASCADE)
+#     film = models.ForeignKey(Film, on_delete=models.CASCADE)
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#
+    # def __str__(self):
+    #     return self.comment_author
