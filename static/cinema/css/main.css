@@ -1,5 +1,10 @@
+.content {
+  background: url(../img/fonesite.jpg) center top !important;
+}
+
 img {
-  width:100%;
+  display: block;
+  max-width: 100%;
 }
 
 .navbar {
@@ -7,19 +12,19 @@ img {
 }
 
 #dropdown01 {
-  color: #ffd600;
+  color: #ffd54f;
 }
 
 #dropdown02 {
-  color: #ffd600;
+  color: #ffd54f;
 }
 
 #dropdown03 {
-  color: #ffd600;
+  color: #ffd54f;
 }
 
 .dropdown-menu {
-  background: #01579b;
+  background: #607d8b;
 }
 
 .dropdown-item {
@@ -27,7 +32,7 @@ img {
 }
 
 .container {
-  background: #eeeeee;
+  background: #b0bec5;
   background-size: 100%;
   padding: 20px;
 }
@@ -51,20 +56,17 @@ img {
   clear: both;
 }
 
-.detail_extra_info_heading {
-  color: #bf360c;
-  font-size: 20px;
-  text-transform: uppercase
-  ;
-}
-
-.detail_extra_details_heading {
-  padding: 15px 0 10px 0;
+.detail_extra_heading {
   color: #bf360c;
   font-size: 20px;
   text-transform: uppercase;
 }
 
-.news_content_full {
-  white-space: pre-wrap;
+.news_content {
+  /*justify-content: center;
+  text-indent: 1.5em;
+  text-align: justify;*/
+  line-height:1.4em;
+  margin-bottom:1.1rem;
+  /*white-space: pre-line;*/
 }
