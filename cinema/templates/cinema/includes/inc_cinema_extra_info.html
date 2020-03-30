@@ -1,0 +1,44 @@
+<div class="row mt-2">
+  <p class="detail_extra_heading pl-2">Details</p>
+  <table class="table table-responsive table-striped">
+    <tbody>
+    {{ film_format }}
+    <tr>
+      <th scope="col">Release Date:</th>
+      <td>{{ cinema.release_data|date:"j M Y" }}</td>
+    </tr>
+    <tr>
+      <th scope="col">Language:</th>
+      <td>
+
+        {% for language in cinema.language.all %}
+
+        <a href="#"> {{ language }}</a>
+        {% if not forloop.last %} |{% endif %}
+
+        {% endfor %}
+
+      </td>
+    </tr>
+    <tr>
+      <th scope="col">Distributor:</th>
+      <td>
+
+        {% for distributor in cinema.distributor.all %}
+
+        <a href="#"> {{ distributor }}</a>
+        {% if not forloop.last %} |{% endif %}
+
+        {% endfor %}
+
+      </td>
+    </tr>
+    <tr>
+      <th scope="col">MPAA:</th>
+      <td>
+        <a href="#">{{ cinema.mpaa_rating }}</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

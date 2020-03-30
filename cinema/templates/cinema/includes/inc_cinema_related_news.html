@@ -1,0 +1,24 @@
+<div class="row mt-2">
+  <p class="detail_extra_heading pl-2">Related News</p>
+  <table class="table table-responsive table-striped d-flex justify-content-center">
+    <tbody>
+
+    {% for news in cinema.related_news %}
+
+    <tr>
+      <td class="align-middle">
+        {{ forloop.counter }}.
+      </td>
+      <td class="align-middle" width=600px>
+        <a href="{% url 'cinema:news-detail' news.pk %}">
+          {{ news.title }}
+        </a>
+      </td>
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+  </table>
+
+</div>

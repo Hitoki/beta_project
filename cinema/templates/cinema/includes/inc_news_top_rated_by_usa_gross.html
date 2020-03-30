@@ -1,0 +1,43 @@
+<div class="row mb-2">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <h6>USA gross</h6>
+              <h5>Top 5 Movies</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="top_rated">
+        <table class="table table-sm table-striped">
+          <tbody>
+
+          {% for film in films_by_usa_gross|slice:":5" %}
+
+          <tr>
+            <td class="align-middle">
+              {{ forloop.counter }}.
+            </td>
+            <td class="align-middle">
+              <a href="{% url 'cinema:film-detail' film.pk %}">
+                {{ film.title }}
+              </a>
+            </td>
+            <td class="align-middle">${{ film.usa_gross }}</td>
+          </tr>
+
+          {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+      <div class="list-group mb-3">
+        <a href="#"
+           class="h5 align-self-center">The whole list</a>
+      </div>
+    </div>
+  </div>
+</div>
