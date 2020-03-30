@@ -1,0 +1,72 @@
+{% extends 'cinema/base.html' %}
+
+{% block description %}{% endblock description %}
+
+
+{% block title %}{% endblock title %}
+
+
+{% block main_content %}
+
+<div class="row">
+  <div class="col-4 detail_photo align-self-center">
+
+    {% block page_photo %}{% endblock %}
+
+  </div>
+  <div class="col-6 detail_main_info align-self-center">
+    <h4 class="detail_main_info_title mb-4 pl-2">{% block page_name %}{% endblock %}</h4>
+
+    {% block page_main_info %}{% endblock %}
+
+  </div>
+  <div class="col-2 align-self-end mb-4 align-self-end">
+
+    {% block page_oscar_price %}{% endblock %}
+
+  </div>
+</div>
+<div class="row mt-2">
+  <a class="detail_extra_heading pl-2"
+     href="javascript:collapsElement('1001')"
+     title=""
+     rel="nofollow">Overview &#9660
+  </a>
+  <div class="pt-3 pr-5"
+       id="1001"
+       style="display: True">
+    <table class="table table-responsive">
+      <tbody>
+      <tr class="align-top">
+        <th scope="col">{% block page_overview_title %}{% endblock %}</th>
+        <td class="text-break d-flex text-justify">
+
+          {% block page_overview_description %}{% endblock %}
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% block page_extra_info %}{% endblock %}
+
+
+{% block page_box_office %}{% endblock %}
+
+
+{% block page_related_news %}{% endblock %}
+
+<script>
+  function collapsElement(id) {
+  if ( document.getElementById(id).style.display != "none" ) {
+  document.getElementById(id).style.display = 'none';
+  }
+  else {
+  document.getElementById(id).style.display = '';
+  }
+  }
+</script>
+
+{% endblock main_content %}

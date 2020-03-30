@@ -1,0 +1,144 @@
+{% extends 'cinema/base_cinema_detail.html' %}
+
+{% block description %}{{ cinema_person.fullname }}{% endblock %}
+
+
+{% block title %}{{ cinema_person.fullname }}{% endblock %}
+
+
+{% block page_photo %}
+{% include "cinema/includes/inc_cinema_photo.html" with poster=cinema_person.avatar name=cinema_person.fullname %}
+{% endblock page_photo %}
+
+
+{% block page_name %}{{ cinema_person.fullname }}{% endblock %}
+
+
+{% block page_main_info %}
+
+<table class="table table-responsive table-striped">
+  <tbody class="align-top">
+  <tr>
+    <th scope="col">Gender:</th>
+    <td>
+      <a href="#">{{ cinema_person.get_gender_display }}</a>
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Age:</th>
+    <td>{{ cinema_person.age }}</td>
+  </tr>
+  <tr>
+    <th scope="col">Birthday:</th>
+    <td>{{ cinema_person.birthday|date:"j M Y" }}</td>
+  </tr>
+  <tr>
+    <th scope="col">Country:</th>
+    <td>
+      <a href="#">{{ cinema_person.country }}</a>
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Career:</th>
+    <td>
+
+      {% for profession in cinema_person.professions %}
+
+      <a href="#">{{ profession }}</a>{% if not forloop.last %},{% endif %}
+
+      {% endfor %}
+
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Genres:</th>
+    <td>
+
+      {% for genre in cinema_person.genres %}
+
+      <a href="#">{{ genre }}</a>{% if not forloop.last %},{% endif %}
+
+      {% endfor %}
+
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Movies:</th>
+    <td>{{ cinema_person.film_set.distinct.count }}</td>
+  </tr>
+  <tr>
+    <th scope="col">Years:</th>
+    <td>{{ cinema_person.year_range }}</td>
+  </tr>
+
+  </tbody>
+</table>
+
+{% endblock page_main_info %}
+
+
+{% block page_oscar_price %}
+{% include "cinema/includes/inc_cinema_oscar.html" with cinema=cinema_person %}
+{% endblock page_oscar_price %}
+
+
+{% block page_overview_title %}Biography:{% endblock %}
+
+
+{% block page_overview_description %}{{ cinema_person.bio }}{% endblock %}
+
+
+{% block page_extra_info %}
+
+<div class="row mt-2">
+  <div class="col-12">
+    <div class="row">
+      <p class="detail_extra_heading pl-2">Filmography</p>
+    </div>
+    <div class="row d-flex justify-content-center">
+
+      {% for profession, films in cinema_person.filmography.items %}
+
+      <p class="font-weight-bold">{{ profession }}</p>
+      <table class="table table-responsive table-striped d-flex justify-content-center">
+        <tbody>
+
+        {% for film in films %}
+
+        <tr>
+          <td class="align-middle">
+
+            {{ forloop.counter }}.
+
+          </td>
+          <td class="align-middle" width=560px">
+            <a href="{% url 'cinema:film-detail' film.pk %}">
+
+              {{ film.title }} ({{ film.release_data__year }})
+
+            </a>
+          </td>
+          <td class="align-middle">
+
+            {{ film.imdb_rating__value }}
+
+          </td>
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+      </table>
+
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+{% endblock page_extra_info %}
+
+
+{% block page_related_news %}
+{% include "cinema/includes/inc_cinema_related_news.html" with cinema=cinema_person %}
+{% endblock page_related_news %}

@@ -1,178 +1,42 @@
-{% extends 'cinema/index.html' %}
+{% extends 'cinema/base_cinema_detail.html' %}
 
-{% load static %}
+{% block description %}{{ product.film.title }} [Blu-ray]{% endblock %}
 
-{% block title %}Once upon a Time in Hollywood{% endblock %}
 
-{% block content %}
-<main role="main">
-  <div class="container">
-    <div class="row">
-      <div class="col-4 detail_photo">
-        <img src="{% static 'cinema/img/Once_upon_a_Time_in_Hollywood.jpg' %}"
-             alt="Once upon a Time in Hollywood Picture"
-             title="Once upon a Time in Hollywood"
-             class="card-img-top mb-4">
-      </div>
-      <div class="col-5 detail_main_info">
-        <h4 class="detail_main_info_title mb-4 pl-2">Once upon a Time in
-          Hollywood</h4>
-        <table class="table table-responsive table-striped">
-          <tbody class="align-top">
-          <tr>
-            <th scope="col">Year:</th>
-            <td>
-              <a href="#">2019</a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="col">Country:</th>
-            <td>USA | UK | China</td>
-          </tr>
-          <tr>
-            <th scope="col">Director:</th>
-            <td>
-              <a href="#">Quentin Tarantino</a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="col">Actors:</th>
-            <td>
-              <a href="#">Leonardo DiCaprio</a>,
-              <a href="#">Brad Pitt</a>,
-              <a href="#">Margot Robbie</a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="col">Runtime:</th>
-            <td>161 min</td>
-          </tr>
-          <tr>
-            <th scope="col">IMDb:</th>
-            <td>
-              <a href="#">7.7</a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="col">MPAA:</th>
-            <td>
-              <a href="#">R</a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="col">Format:</th>
-            <td>Blu-ray</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="col-3 detail_price align-self-end mb-4">
-        <p class="detail_info_heading">Product Code:
-          <span class="detail_info_text">00001</span>
-        </p>
-        <h4 class="detail_price_heading text-danger">$25.00</h4>
-        <span class="detail_info_text">In stock</span>
-        <div class="detail_price_button pt-3">
-          <button type="button"
-                  class="btn btn-primary btn-lg active btn-success"
-                  aria-pressed="true" title="Add to Cart">Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="detail_extra">
-      <div class="detail_extra_overview">
-        <a class="detail_extra_info_heading pl-2"
-           href="javascript:collapsElement('1001')"
-           title=""
-           rel="nofollow">Overview &#9660
-        </a>
-        <div class="detail_extra_info_text pt-3"
-             id="1001"
-             style="display: True">
-          <table class="table table-responsive">
-            <tbody>
-            <tr class="align-top">
-              <th scope="col">Storyline:</th>
-              <td class="text-break">Quentin Tarantino's Once
-                Upon a Time ... in Hollywood visits
-                1969 Los Angeles, where everything is changing, as TV star Rick
-                Dalton (Leonardo DiCaprio) and his longtime stunt double Cliff
-                Booth (Brad Pitt) make their way around an industry they hardly
-                recognize anymore. The ninth film from the writer-director
-                features a large ensemble cast and multiple storylines in a
-                tribute to the final moments of Hollywood's golden age.
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="detail_extra_details_heading pl-2">Details</div>
-      <table class="table table-responsive table-striped">
-        <tbody>
-        <tr>
-          <th scope="col">Genre:</th>
-          <td>Comedy | Drama</td>
-        </tr>
-        <tr>
-          <th scope="col">Release Date:</th>
-          <td>21 May 2019</td>
-        </tr>
-        <tr>
-          <th scope="col">Language:</th>
-          <td>English</td>
-        </tr>
-        <tr>
-          <th scope="col">Distributor:</th>
-          <td>
-            <a href="#"> 20th Century Fox</a>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <div class="detail_extra_details_heading pl-2">Box Office</div>
-      <table class="table table-responsive table-striped">
-        <tbody>
-        <tr>
-          <th scope="col">Budget:</th>
-          <td>$90000000.00</td>
-        </tr>
-        <tr>
-          <th scope="col">USA Gross:</th>
-          <td>$142502728.00</td>
-        </tr>
-        <tr>
-          <th scope="col">World Gross:</th>
-          <td>$374341301.00</td>
-        </tr>
-        </tbody>
-      </table>
-      <div class="detail_extra_overview mt-3">
-        <a class="detail_extra_info_heading pl-2"
-           href="javascript:collapsElement('1002')"
-           title=""
-           rel="nofollow">Related News &#9660
-        </a>
-        <div class="detail_extra_info_text"
-             id="1002"
-             style="display: none">
-          <p class="detail_info_heading">
-            <span class="detail_info_text"></span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div> <!-- /container -->
-</main>
-<script>
-  function collapsElement(id) {
-  if ( document.getElementById(id).style.display != "none" ) {
-  document.getElementById(id).style.display = 'none';
-  }
-  else {
-  document.getElementById(id).style.display = '';
-  }
-  }
-</script>
-{% endblock %}
+{% block title %}{{ product.film.title }} [Blu-ray]{% endblock %}
+
+
+{% block page_photo %}
+{% include "cinema/includes/inc_cinema_photo.html" with poster=product.film.poster name=product.film.title %}
+{% endblock page_photo %}
+
+
+{% block page_name %}{{ product.film.title }} [Blu-ray]{% endblock %}
+
+
+{% block page_main_info %}
+{% include "cinema/includes/inc_cinema_main_info.html" with cinema=product.film %}
+{% include "cinema/includes/inc_cinema_imdb.html" with cinema=product.film %}
+{% endblock page_main_info %}
+
+
+{% block page_oscar_price %}
+{% include "cinema/includes/inc_cinema_oscar.html" with cinema=product.film %}
+{% include "cinema/includes/inc_cinema_price.html" with cinema=product.film %}
+{% endblock page_oscar_price %}
+
+
+{% block page_overview_title %}Storyline:{% endblock %}
+
+
+{% block page_overview_description %}{{ product.film.description }}{% endblock %}
+
+
+{% block page_extra_info %}
+{% include "cinema/includes/inc_cinema_extra_info.html" with cinema=product.film film_format='<tr><th scope="col">Format:</th><td>Blu-ray</td></tr>' %}
+{% endblock page_extra_info %}
+
+
+{% block page_box_office %}
+{% include "cinema/includes/inc_cinema_box_office.html" with cinema=product.film %}
+{% endblock page_box_office %}

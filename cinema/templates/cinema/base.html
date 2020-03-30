@@ -3,17 +3,14 @@
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
   <meta name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author"
-        content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="description"
+        content="{% block description %}{% endblock %} - Cinema">
+  <meta name="author" content="Yurii Borovenskyi">
   <meta name="generator" content="Jekyll v3.8.6">
-  <title>Cinema: {% block title %}{% endblock %}</title>
 
-  <link rel="canonical"
-        href="https://getbootstrap.com/docs/4.4/examples/jumbotron/">
+  <title>{% block title %}{% endblock %} - Cinema</title>
 
   <!-- Bootstrap core CSS -->
   <link href="{% static 'cinema/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -21,21 +18,10 @@
 
   <!-- Favicons -->
   <link rel="apple-touch-icon"
-        href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png"
-        sizes="180x180">
-  <link rel="icon"
-        href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon-32x32.png"
-        sizes="32x32" type="image/png">
-  <link rel="icon"
-        href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon-16x16.png"
-        sizes="16x16" type="image/png">
+        href="{% static 'cinema/img/favicon-180.png' %}" sizes="180x180">
   <link rel="manifest"
         href="https://getbootstrap.com/docs/4.4/assets/img/favicons/manifest.json">
-  <link rel="mask-icon"
-        href="https://getbootstrap.com/docs/4.4/assets/img/favicons/safari-pinned-tab.svg"
-        color="#563d7c">
-  <link rel="icon"
-        href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon.ico">
+  <link rel="icon" href="{% static 'cinema/img/favicon.ico' %}">
   <meta name="msapplication-config"
         content="/docs/4.4/assets/img/favicons/browserconfig.xml">
   <meta name="theme-color" content="#563d7c">
@@ -49,15 +35,14 @@
         -ms-user-select: none;
         user-select: none;
       }
-
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
           font-size: 3.5rem;
         }
       }
 
-
   </style>
+
   <!-- Custom styles for this template -->
   <link href="{% static 'cinema/css/jumbotron.css' %}" rel="stylesheet">
   <link href="{% static 'cinema/css/font-awesome.min.css' %}" rel="stylesheet"
@@ -70,19 +55,109 @@
 </head>
 
 <body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top content">
+  <a class="navbar-brand py-0" href="{% url 'cinema:product-list' %}">
+    <img style="width: auto !important; height: 40px !important;"
+         src="{% static 'cinema/img/cinema_logo_gold.png' %}"
+         alt="Cinema logo picture">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-{% block header %}
-{% endblock %}
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle font-weight-bold"
+           href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">Blu-ray
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="#">Best Sellers</a>
+          <a class="dropdown-item" href="#">New Releases</a>
+          <a class="dropdown-item" href="#">Top rated</a>
+          <a class="dropdown-item" href="#">Shop by Genre</a>
+          <a class="dropdown-item" href="#">Shop by Actor</a>
+        </div>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle font-weight-bold"
+           href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">Kinonews
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdown02">
+          <a class="dropdown-item" href="{% url 'cinema:news-list' %}">News</a>
+          <a class="dropdown-item" href="#">Premieres</a>
+          <a class="dropdown-item" href="#">Articles</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle font-weight-bold"
+           href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">Movies
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdown03">
+          <a class="dropdown-item" href="">Top Rated Movies</a>
+          <a class="dropdown-item" href="#">Top Box Office</a>
+          <a class="dropdown-item" href="#">Navigator</a>
+        </div>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search"
+             aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+        Search</button>
+    </form>
+  </div>
+</nav>
 
-{% block content %}
-{% endblock %}
+<main class="content" role="main">
+  <div class="container">
 
-{% block footer %}
-{% endblock %}
+    {% block main_content %}{% endblock %}
+
+
+    {% block pagination %}
+    {% if is_paginated %}
+      <div class="pagination">
+        <span class="page-links">
+          {% if page_obj.has_previous %}
+            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous
+            </a>
+          {% endif %}
+            <span class="page-current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+          {% if page_obj.has_next %}
+            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+          {% endif %}
+        </span>
+      </div>
+    {% endif %}
+    {% endblock pagination %}
+
+  </div> <!-- /container -->
+</main>
+
+<footer class="container-fluid content">
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <div class="p-3 h3 text-danger">18+</div>
+    <div class="p-3 text-white">Copyright © 2020 CINEMA. All rights reserved</div>
+    <div class="p-3 text-white text-right">
+      <small>Using materials, a reference to this site is required
+        <br>Website development - <u>Yurii Borovenskyi</u>
+      </small>
+    </div>
+  </div>
+</footer>
+
 <script src="{% static 'cinema/js/jquery-3.4.1.slim.min.js' %}"></script>
 <script src="{% static 'cinema/js/popper.min.js' %}"></script>
 <script src="{% static 'cinema/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'cinema/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'cinema/js/jquery.min.js' %}"></script>
+
 </body>
 </html>
