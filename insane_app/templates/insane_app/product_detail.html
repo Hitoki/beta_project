@@ -1,0 +1,8 @@
+{% extends 'insane_app/base.html' %}
+
+{% block body %}
+  <h3>{{object.name}}</h3>
+  <p>{{object.description}}</p>
+  <p>Seller: {{object.owner.name}}</p>
+  <p>Price: {{object.price}}</p>
+{% endblock %}
