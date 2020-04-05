@@ -23,7 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Students` applications
-    'insane_app',
+    'insane_app'
+    # Vadim Goloviychuk's app
+    'rent_cars'
     'cinema.apps.CinemaConfig',
 ]
 

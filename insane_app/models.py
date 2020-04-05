@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -16,8 +17,19 @@ class SanityRank(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    sanity = models.PositiveIntegerField(default=0)
-    rank = models.ForeignKey(SanityRank, null=True, on_delete=models.PROTECT)
+    _sanity = models.PositiveIntegerField(default=0)
+    rank = models.ForeignKey(SanityRank, on_delete=models.PROTECT)
+
+    @property
+    def sanity(self):
+        return self.sanity
+
+    @sanity.setter
+    def sanity(self, value):
+        if value <= self.rank.sanity_cap:
+            self._sanity = value
+        else:
+            self._sanity = self.rank.sanity_cap
 
     # FIXME: this code breaks the program for everyone else
     # @receiver(post_save, sender=User)
@@ -41,12 +53,10 @@ class Profile(models.Model):
 
 class UserGroup(models.Model):
     name = models.CharField(max_length=32)
-    admin = models.ForeignKey(
-        User,
-        related_name='admined_group',
-        on_delete=models.SET_NULL,
-        null=True
-    )
+
+    def get_new_admin(self):
+        return self.members.first()
+
     members = models.ManyToManyField(
         User,
         related_name='user_group',
@@ -54,10 +64,6 @@ class UserGroup(models.Model):
         through_fields = ('user_group', 'user')
     )
     dt_created = models.DateTimeField(auto_now_add=True)
-
-    def __init__(self, name, admin):
-        self.name = name
-        self.admin = admin
 
     def __str__(self):
         return self.name
@@ -69,15 +75,23 @@ class UserGroup(models.Model):
 class Membership(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     user_group = models.ForeignKey(UserGroup, on_delete=models.CASCADE)
+    ROLES = (
+        ('ad', 'admin'),
+        ('mb', 'member'),
+    )
+    role = models.CharField(max_length=2, choices=ROLES)
 
     class Meta:
         unique_together = (('user', 'user_group'),)
+
+    def __str__(self):
+        return f'{self.user_group.name} - {self.user.username}[{self.get_role_display()}]'
 
 
 class Story(models.Model):
     name = models.CharField(max_length=64)
     body = models.TextField(max_length=600)
-    like_count = models.PositiveIntegerField()
+    like_count = models.PositiveIntegerField(default=0, blank=True)
     dt_created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
         User,
@@ -87,6 +101,9 @@ class Story(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('insane:story', args=[self.pk])
 
 
 class StoryImage(models.Model):
@@ -108,6 +125,7 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=64)
     description = models.TextField(max_length=500)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     story = models.ForeignKey(
         Story,
         on_delete=models.SET_NULL,
@@ -120,6 +138,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('insane:product', args=[self.pk])
 
 
 class ProductImage(models.Model):

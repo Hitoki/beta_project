@@ -1,0 +1,9 @@
+{% extends 'insane_app/base.html' %}
+
+{% block body %}
+  <h3>{{object.name}}</h3>
+  <p>{{object.body}}</p>
+  <p>Likes: {{object.like_count}}</p>
+  <p>Date: {{object.dt_created}}</p>
+  <p>Created by: {{object.author.username}}</p>
+{% endblock %}
