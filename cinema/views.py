@@ -1,5 +1,17 @@
-from django.http import HttpResponse
+from django.views.generic import TemplateView
 
 
-def index(request):
-    return HttpResponse('Welcome to my first test page!')
+class CinemaTemplateView(TemplateView):
+    template_name = 'cinema/index.html'
+
+
+class ProductDetailTemplateView(TemplateView):
+    template_name = 'cinema/product_detail.html'
+
+
+class NewsListTemplateView(TemplateView):
+    template_name = 'cinema/news_list.html'
+
+
+class NewsDetailTemplateView(TemplateView):
+    template_name = 'cinema/news_detail.html'
