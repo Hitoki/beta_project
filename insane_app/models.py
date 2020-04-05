@@ -31,13 +31,15 @@ class Profile(models.Model):
         else:
             self._sanity = self.rank.sanity_cap
 
-    @receiver(post_save, sender=User)
+    # FIXME: this code breaks the program for everyone else
+    # @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             rank = SanityRank.objects.first()
             Profile.objects.create(user=instance, sanity=rank.sanity_cap, rank=rank)
 
-    @receiver(post_save, sender=User)
+    # FIXME: this code breaks the program for everyone else
+    # @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
 

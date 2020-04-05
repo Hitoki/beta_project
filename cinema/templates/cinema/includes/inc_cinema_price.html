@@ -1,0 +1,15 @@
+<div class="detail_price">
+  <p class="detail_info_heading">Article:
+    <span class="detail_info_text">{{ product.pk }}</span>
+  </p>
+  <h4 class="detail_price_heading text-danger">${{ product.price }}</h4>
+  <span class="detail_info_text">
+
+    {% if product.in_stock %}In stock{% else %}Out of stock{% endif %}</span>
+
+  <div class="detail_price_button pt-3">
+    <button type="button" class="btn btn-primary btn-lg active btn-success"
+            aria-pressed="true" title="Add to Cart">Buy Now
+    </button>
+  </div>
+</div>

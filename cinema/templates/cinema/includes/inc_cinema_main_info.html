@@ -1,0 +1,86 @@
+{% load datetime_filter %}
+
+<table class="table table-responsive table-striped">
+  <tbody class="align-top">
+  <tr>
+    <th scope="col">Year:</th>
+    <td>
+      <a href="#">{{ cinema.year }}</a>
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Country:</th>
+    <td>
+
+      {% for country in cinema.country.all %}
+
+      <a href="#"> {{ country }}</a>
+      {% if not forloop.last %} |{% endif %}
+
+      {% endfor %}
+
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Genre:</th>
+    <td>
+
+      {% for genre in cinema.genre.all %}
+
+      <a href="#"> {{ genre }}</a>
+      {% if not forloop.last %} |{% endif %}
+
+      {% endfor %}
+
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Director:</th>
+    <td>
+
+      {% for director in cinema.directors %}
+
+      <a href="{% url 'cinema:movie-person-detail' director.pk %}">
+        {{ director.user__first_name }}
+        {{ director.user__last_name }}</a>{% if not forloop.last %},{% endif %}
+
+      {% endfor %}
+
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Actors:</th>
+    <td width="100%">
+
+      {% for actor in cinema.actors %}
+
+      <a href="{% url 'cinema:movie-person-detail' actor.pk %}">
+        {{ actor.user__first_name }}
+        {{ actor.user__last_name }}</a>{% if not forloop.last %},{% endif %}
+
+      {% endfor %}
+
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Writer:</th>
+    <td>
+
+      {% for writer in cinema.writers %}
+
+      <a href="{% url 'cinema:movie-person-detail' writer.pk %}">
+        {{ writer.user__first_name }}
+        {{ writer.user__last_name }}</a>{% if not forloop.last %},{% endif %}
+
+      {% endfor %}
+
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Runtime:</th>
+    <td>
+      {{ cinema.run_time|format_datetime }}
+    </td>
+  </tr>
+  </tbody>
+</table>
