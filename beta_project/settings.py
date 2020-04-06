@@ -24,9 +24,9 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     # Students` applications
-    'insane_app'
+    'insane_app',
     # Vadim Goloviychuk's app
-    'rent_cars'
+    'rent_cars',
     'cinema.apps.CinemaConfig',
 ]
 
