@@ -1,15 +1,30 @@
 {% extends 'insane_app/base.html' %}
+{% load humanize %}
 
 {% block body %}
-  <ul class="list-group list-group-flush">
+  <div class="list-group list-group-flush">
     {% for story in object_list %}
-      <li class="list-group-item list-group-item-flush">
-        <a href="{{ story.get_absolute_url }}">
-          {{story.name}}, author: {{story.author.username}}
-        </a>
-      </li>
+      <div class="list-group-item list-group-item-light m-2">
+        <div class="d-flex justify-content-between">
+          <div>
+            <a class="list-group-item-action" href="{{ story.get_absolute_url }}">
+              {{story.name}}
+            </a>
+          </div>
+          <div>author: {{story.author.username}}</div>
+        </div>
+        <p>
+          {{story.body|truncatewords:20}}
+        </p>
+        <div class="d-flex justify-content-between">
+          <div>
+            <i class="far fa-thumbs-up"></i>{{story.like_count}}
+          </div>
+          <div>{{story.dt_created|naturaltime}}</div>
+        </div>
+      </div>
     {% empty %}
       <li>No stories yet</li>
     {% endfor %}
-  </ul>
+  </div>
 {% endblock %}

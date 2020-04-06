@@ -2,6 +2,36 @@
 
 {% block body %}
   <h3>{{object.name}}</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6">
+        <div id="carousel" class="carousel slide" height="200" data-ride="carousel">
+          <ol class="carousel-indicators">
+            {% for image in object.productimage_set.all %}
+              <li data-target="#carousel" data-slide-to="{{forloop.counter0}}" class="carousel-indicator{% if forloop.first %} active{% endif %}"></li>
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+            {% for image in object.productimage_set.all %}
+              <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                <img class="d-block w-100" position="center" src="/media/{{image.image}}" alt="First slide">
+              </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+      <div class="col-xl-3"></div>
+    </div>
+  </div>
   <p>{{object.description}}</p>
   <p>Seller: {{object.owner.name}}</p>
   <p>Price: {{object.price}}</p>

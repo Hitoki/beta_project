@@ -11,4 +11,7 @@ admin.site.register(Profile)
 admin.site.register(Membership)
 admin.site.register(SanityRank)
 admin.site.register(UserGroup)
-admin.site.register(ProductImage)
+admin.site.register(
+    ProductImage,
+    readonly_fields = ('image_tag',)
+)

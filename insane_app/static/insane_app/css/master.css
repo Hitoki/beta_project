@@ -2,6 +2,38 @@
   background-color: black;
 }
 
+.bg_darkgray{
+  background-color: darkgray;
+}
+
 .list-group-item-flush{
-  background-color: lightgray;
+  background-color: gray;
+}
+
+.right_bar{
+
+}
+
+.jumbotron{
+  background-color: red;
+}
+
+.carousel-item {
+  max-height: 300px;
+  max-width: 600px;
+  height: 100%;
+  width: auto;
+}
+
+.carousel-item img {
+  max-height: 300px;
+  max-width: 600px;
+  height: 100%;
+  width: auto;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon,
+.carousel-indicator {
+  filter: invert(1);
 }

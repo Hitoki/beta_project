@@ -1,11 +1,43 @@
 {% extends 'insane_app/base.html' %}
 
+{% block left_bar %}
+<form action="" method="get">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Category</h5>
+        <select id="categories" name="categories" class="custom-select custom-select-sm" multiple>
+          {% for category in category_set %}
+            <option value="{{category.id}}">{{category}}</option>
+          {% endfor %}
+        </select>
+        <input type="submit" class="btn btn-primary m-2" name="category_filter" value="Apply filter">
+    </div>
+  </div>
+</form>
+{% endblock %}
+
 {% block body %}
-  <ul class="list-group">
-    {% for product in object_list %}
-      <li class="list-group-item"><a href="{{ product.get_absolute_url }}">{{product.name}} ${{product.price}}</a></li>
-    {% empty %}
-      <li class="list-group-item">No products yet</li>
-    {% endfor %}
-  </ul>
+  <div class="container">
+      <div class="row">
+      {% for product in object_list %}
+        <div class="col-sm-6 col-md-4 col-lg-4 d-flex">
+          <div class="card flex-fill mb-4">
+            <img class="img-fluid" height="auto" width="100%" src="
+              {% if product.productimage_set.count %}
+                /media/{{product.productimage_set.first.image}}
+              {% else %}
+                /media/images/default.jpg
+              {% endif %}
+            " alt="">
+            <div class="card-body">
+              <a class="card-title card-link" href="{{ product.get_absolute_url }}">{{product.name}}</a>
+              <p class="mb-0">price: ${{product.price}}</p>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <li class="list-group-item">No products yet</li>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

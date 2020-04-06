@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.utils.html import escape
 
 User = get_user_model()
 
@@ -141,6 +142,22 @@ class Product(models.Model):
         return reverse('insane:product', args=[self.pk])
 
 
+def get_image_path(instance, filename):
+    return f"images/{instance.product.owner.username}/{filename}"
+
+
 class ProductImage(models.Model):
-    src = models.CharField(max_length=128)
+    image = models.ImageField(upload_to=get_image_path)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (('image', 'product'),)
+
+    def __str__(self):
+        return f"{self.product.name}, {self.image}"
+
+    def image_tag(self):
+        return f'<img src="/static/{self.image}"/>'
+
+    image_tag.short_description = 'Image'
+    image_tag.allow_tags = True
