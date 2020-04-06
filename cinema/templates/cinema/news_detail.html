@@ -1,0 +1,48 @@
+{% extends 'cinema/base.html' %}
+
+{% block description %}{{ news.title }}{% endblock %}
+
+
+{% block title %}{{ news.title }}{% endblock %}
+
+
+{% block main_content %}
+
+<div class="row">
+  <div class="col-md-9">
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <div class="card bg-white">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="news-title">
+                  <h2>{{ news.title }}</h2>
+                </div>
+
+                {% include "cinema/includes/inc_news_source.html" %}
+
+                <hr>
+                <div class="news-image">
+                  <img src="{{ news.news_detail_photo.url }}">
+                </div>
+
+                {% include "cinema/includes/inc_news_content.html" with content=news.description|linebreaks %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+
+    {% include "cinema/includes/inc_news_top_rated_by_imdb.html" %}
+    {% include "cinema/includes/inc_news_top_rated_by_budget.html" %}
+    {% include "cinema/includes/inc_news_top_rated_by_usa_gross.html" %}
+
+  </div>
+</div>
+
+{% endblock main_content %}

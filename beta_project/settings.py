@@ -6,7 +6,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "NOT_EMPTY")
+SECRET_KEY = os.environ.get("SECRET_KEY", "")
 
 DEBUG = True
 
@@ -23,8 +23,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
-    # Dima Shendryk`s app
-    'insane_app',
+    # Students` applications
+    'insane_app'
+    # Vadim Goloviychuk's app
+    'rent_cars'
+    'cinema.apps.CinemaConfig',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +108,18 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Media files (Images, Video)
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 # Local settings
 

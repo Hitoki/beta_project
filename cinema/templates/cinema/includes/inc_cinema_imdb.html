@@ -1,0 +1,20 @@
+{% load static %}
+
+<table style="background-color: #fff; border: 1px solid #666;
+              font-size: 18px; margin: 20px 10px;">
+  <tr>
+    <td>
+      <img src="{% static 'cinema/img/imdb_logo.png' %}"
+             alt="IMDb logo picture"
+             title="IMDb Rating">
+    </td>
+    <td>
+      <a href="#">{{ cinema.imdb_rating }}</a>
+      <small>/10</small>
+    </td>
+    <td>
+      <img src="{% static 'cinema/img/imdb_star_logo.png' %}"
+           alt="IMDb star logo picture">
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,42 @@
+{% extends 'cinema/base_cinema_detail.html' %}
+
+{% block description %}{{ product.film.title }} [Blu-ray]{% endblock %}
+
+
+{% block title %}{{ product.film.title }} [Blu-ray]{% endblock %}
+
+
+{% block page_photo %}
+{% include "cinema/includes/inc_cinema_photo.html" with poster=product.film.poster name=product.film.title %}
+{% endblock page_photo %}
+
+
+{% block page_name %}{{ product.film.title }} [Blu-ray]{% endblock %}
+
+
+{% block page_main_info %}
+{% include "cinema/includes/inc_cinema_main_info.html" with cinema=product.film %}
+{% include "cinema/includes/inc_cinema_imdb.html" with cinema=product.film %}
+{% endblock page_main_info %}
+
+
+{% block page_oscar_price %}
+{% include "cinema/includes/inc_cinema_oscar.html" with cinema=product.film %}
+{% include "cinema/includes/inc_cinema_price.html" with cinema=product.film %}
+{% endblock page_oscar_price %}
+
+
+{% block page_overview_title %}Storyline:{% endblock %}
+
+
+{% block page_overview_description %}{{ product.film.description }}{% endblock %}
+
+
+{% block page_extra_info %}
+{% include "cinema/includes/inc_cinema_extra_info.html" with cinema=product.film film_format='<tr><th scope="col">Format:</th><td>Blu-ray</td></tr>' %}
+{% endblock page_extra_info %}
+
+
+{% block page_box_office %}
+{% include "cinema/includes/inc_cinema_box_office.html" with cinema=product.film %}
+{% endblock page_box_office %}

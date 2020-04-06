@@ -1,0 +1,18 @@
+{% load static %}
+
+{% if cinema.oscar_awards %}
+
+<table class="mb-4 ml-3">
+  <tr>
+    <td>
+      <img src="{% static 'cinema/img/awardsOscar.png' %}"
+           alt="Oscar awards picture"
+           title="Oscar awards">
+    </td>
+  </tr>
+  <tr>
+    <td><p class="ml-5 text-primary">{{ cinema.oscar_awards }}</p></td>
+  </tr>
+</table>
+
+{% endif %}

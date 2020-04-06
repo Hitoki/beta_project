@@ -1,0 +1,46 @@
+{% extends 'cinema/base_cinema_detail.html' %}
+
+{% block description %}{{ film.title }}{% endblock %}
+
+
+{% block title %}{{ film.title }}{% endblock %}
+
+
+{% block page_photo %}
+{% include "cinema/includes/inc_cinema_photo.html" with poster=film.poster name=film.title %}
+{% endblock page_photo %}
+
+
+{% block page_name %}{{ film.title }}{% endblock %}
+
+
+{% block page_main_info %}
+{% include "cinema/includes/inc_cinema_main_info.html" with cinema=film %}
+{% include "cinema/includes/inc_cinema_imdb.html" with cinema=film %}
+{% endblock page_main_info %}
+
+
+{% block page_oscar_price %}
+{% include "cinema/includes/inc_cinema_oscar.html" with cinema=film %}
+{% endblock page_oscar_price %}
+
+
+{% block page_overview_title %}Storyline:{% endblock %}
+
+
+{% block page_overview_description %}{{ film.description }}{% endblock %}
+
+
+{% block page_extra_info %}
+{% include "cinema/includes/inc_cinema_extra_info.html" with cinema=film %}
+{% endblock page_extra_info %}
+
+
+{% block page_box_office %}
+{% include "cinema/includes/inc_cinema_box_office.html" with cinema=film %}
+{% endblock page_box_office %}
+
+
+{% block page_related_news %}
+{% include "cinema/includes/inc_cinema_related_news.html" with cinema=film %}
+{% endblock page_related_news %}

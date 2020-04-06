@@ -1,0 +1,64 @@
+{% extends 'cinema/base.html' %}
+
+{% block description %}Latest Movie News{% endblock %}
+
+
+{% block title %}Latest Movie News{% endblock %}
+
+
+{% block main_content %}
+
+<div class="row mb-2">
+  <div class="col-md-9">
+    <h4 class="font-weight-bold text-center text-danger">Movie News</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-9">
+
+    {% for news in news_list %}
+
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <div class="card bg-white">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <img src="{{ news.news_feed_photo.url }}">
+              </div>
+              <div class="col-md-9">
+                <div class="news-title">
+                  <a href="{% url 'cinema:news-detail' news.pk %}">
+                    <h5>{{ news.title }}</h5>
+                  </a>
+                </div>
+
+                {% include "cinema/includes/inc_news_source.html" %}
+
+                {% include "cinema/includes/inc_news_content.html" with content=news.description|truncatewords_html:50 %}
+
+                <a href="{% url 'cinema:news-detail' news.pk %}">
+                  <button type="button" class="btn btn-sm btn-outline-primary">
+                    Read More
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+
+  </div>
+  <div class="col-md-3">
+
+    {% include "cinema/includes/inc_news_top_rated_by_imdb.html" %}
+    {% include "cinema/includes/inc_news_top_rated_by_budget.html" %}
+    {% include "cinema/includes/inc_news_top_rated_by_usa_gross.html" %}
+
+  </div>
+</div>
+
+{% endblock main_content %}
