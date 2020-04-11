@@ -1,12 +1,14 @@
 from django.db import models
+from django.db.models import F
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_delete, post_save
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils.html import escape
 
 User = get_user_model()
+
 
 class SanityRank(models.Model):
     name = models.CharField(unique=True, max_length=20)
@@ -107,13 +109,37 @@ class Story(models.Model):
         return reverse('insane:story', args=[self.pk])
 
 
+def get_story_image (instance, filename):
+    return f"images/{instance.author.username}/{filename}"
+
+
 class StoryImage(models.Model):
-    src = models.CharField(max_length=128)
+    image = models.ImageField(upload_to=get_story_image)
     product = models.ForeignKey(
         Story,
         related_name='image',
         on_delete=models.CASCADE
     )
+
+
+class StoryLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (("user", "story"),)
+
+    def __str__(self):
+        return f"{self.user.username} likes {self.story.name}"
+
+
+@receiver(post_save, sender=StoryLike)
+def _story_like_save(sender, instance, **kwargs):
+    Story.objects.filter(pk=instance.story.pk).update(like_count=F('like_count')+1)
+
+@receiver(pre_delete, sender=StoryLike)
+def _story_like_delete(sender, instance, **kwargs):
+    Story.objects.filter(pk=instance.story.pk).update(like_count=F('like_count')-1)
 
 
 class Category(models.Model):
@@ -144,12 +170,13 @@ class Product(models.Model):
         return reverse('insane:product', args=[self.pk])
 
 
-def get_image_path(instance, filename):
+# ProductImage
+def get_product_image(instance, filename):
     return f"images/{instance.product.owner.username}/{filename}"
 
 
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to=get_image_path)
+    image = models.ImageField(upload_to=get_product_image)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     class Meta:

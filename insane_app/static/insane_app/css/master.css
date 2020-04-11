@@ -18,6 +18,7 @@
   background-color: red;
 }
 
+/* carousel */
 .carousel-item {
   max-height: 300px;
   max-width: 600px;
@@ -36,4 +37,17 @@
 .carousel-control-prev-icon,
 .carousel-indicator {
   filter: invert(1);
+}
+
+/* likes */
+
+.fas.fa-thumbs-up{
+  color: green !important;
+}
+
+#like{
+  background-color: transparent;
+  padding: 0;
+  margin: 4px;
+  border: none;
 }

@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from django.utils import timezone
+from django.http import HttpResponse
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.contrib.auth import get_user_model
 
-from insane_app.models import Story, Product, Category
+User = get_user_model()
+
+from insane_app.models import Story, Product, Category, StoryLike
 
 
 class StoryListView(ListView):
@@ -24,7 +28,28 @@ class StoryDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
+
+        try:
+            StoryLike.objects.get(story__pk = kwargs['object'].pk, user = User.objects.first())    #self.request.user)
+            context['liked'] = True
+        except StoryLike.DoesNotExist:
+            pass
+
         return context
+
+
+def like_story(request, pk):
+    object, created = StoryLike.objects.get_or_create(
+        user=User.objects.first(),
+        story=Story.objects.get(pk=pk)
+    )
+
+    if not created:
+        object.delete()
+    else:
+        created = 1
+
+    return HttpResponse(created)
 
 
 class ProductListView(ListView):
