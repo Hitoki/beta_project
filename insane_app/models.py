@@ -25,7 +25,7 @@ class Profile(models.Model):
 
     @property
     def sanity(self):
-        return self.sanity
+        return self._sanity
 
     @sanity.setter
     def sanity(self, value):

@@ -1,0 +1,34 @@
+{% extends "insane_app/base.html" %}
+
+{% block body %}
+
+<div class="jumbotron px-5 py-4">
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if next %}
+      {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.</p>
+      {% else %}
+        <p>Please login to see this page.</p>
+      {% endif %}
+  {% endif %}
+  <form method="post" action="{% url 'insane:login' %}">
+    <div class="form-group">
+      {% csrf_token %}
+      <div>{{ form.username.label_tag }}</div>
+      {{ form.username }}
+      <div>{{ form.password.label_tag }}</div>
+      {{ form.password }}
+    </div>
+
+    <input class="btn btn-primary m-2" type="submit" value="login">
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+
+  <p><a class="btn" href="">Lost password?</a>(not implemented yet)</p>
+</div>
+
+{% endblock %}

@@ -14,10 +14,6 @@
 
 }
 
-.jumbotron{
-  background-color: red;
-}
-
 /* carousel */
 .carousel-item {
   max-height: 300px;
@@ -50,4 +46,13 @@
   padding: 0;
   margin: 4px;
   border: none;
+}
+
+/* login form */
+.btn-primary{
+  background-color: black;
+  border: 0;
+}
+.btn-primary:hover{
+  background-color: #030303;
 }
