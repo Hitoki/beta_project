@@ -9,7 +9,7 @@
     <title>Insane Site</title>
   </head>
 
-  <body class="bg_darkgray">
+  <body>
     <nav class="navbar navbar-dark bg-black navbar-expand-md">
       <a class="navbar-brand" href="/insane/"> <img src="/static/insane_app/images/logo.jpg" alt="Insane" height="40"> </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@
               <a class="nav-link" href="{% url 'insane:logout' %}">Logout</a>
             </div>
           {% else %}
-            <div class="nav-item">
+            <div class="nav-item m-1">
               <a class="nav-link" href="{% url 'insane:login' %}">Login</a>
             </div>
           {% endif %}
@@ -46,16 +46,16 @@
       </div>
     </nav>
 
-    <div class="row">
-      <div class="col-xl-2">
+    <div class="row m-0">
+      <div class="col-md-2">
         {% block left_bar %}
         {% endblock %}
       </div>
-      <div class="col-xl-8">
+      <div class="col-md-8">
         {% block body %}
         {% endblock %}
       </div>
-      <div class="col-xl-2">
+      <div class="col-md-2">
         <div class="right_bar">
           {% block right_bar %}
           {% endblock %}

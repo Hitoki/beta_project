@@ -2,7 +2,7 @@
 
 {% block left_bar %}
 <form action="" method="get">
-  <div class="card">
+  <div class="card m-2">
     <div class="card-body">
       <h5 class="card-title">Category</h5>
         <select id="categories" name="categories" class="custom-select custom-select-sm" multiple>
@@ -14,6 +14,11 @@
     </div>
   </div>
 </form>
+  <div class="card m-2">
+    <div class="card-body">
+      <a class="card-link" href="{% url 'insane:create_product' %}">Create new product</a>
+    </div>
+  </div>
 {% endblock %}
 
 {% block body %}

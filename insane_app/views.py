@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.http import HttpResponse
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 
 User = get_user_model()
 
@@ -52,6 +54,11 @@ def like_story(request, pk):
     return HttpResponse(created)
 
 
+class StoryCreateView(CreateView):
+    model = Story
+    fields = ('name', 'body')
+
+
 class ProductListView(ListView):
 
     model = Product
@@ -79,3 +86,26 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
         return context
+
+
+class ProductCreateView(CreateView):
+
+    model = Product
+    fields = ('name', 'description', 'price')
+
+    success_url = '/insane/market/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_set'] = Category.objects.all()
+        return context
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.owner = self.request.user
+        categories = self.request.POST.getlist('categories', ())
+        print(categories)
+        self.object.save()
+        if categories:
+            self.object.categories.set(Category.objects.filter(pk__in=categories))
+        return redirect(self.get_success_url())

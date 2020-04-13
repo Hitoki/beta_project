@@ -2,17 +2,26 @@
   background-color: black;
 }
 
-.bg_darkgray{
-  background-color: darkgray;
+body{
+  background-color: #202020;
 }
 
 .list-group-item-flush{
   background-color: gray;
 }
 
-.right_bar{
-
+.jumbotron{
+  height: stretch;
 }
+
+.nav{
+  margin-right: 0;
+}
+
+.card-link{
+  color: invert;
+}
+
 
 /* carousel */
 .carousel-item {
