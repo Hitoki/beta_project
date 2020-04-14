@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-"""Application filter for `datetime` 24 hours.
+"""
+The custom filter for formatting django-field 'Duration'.
 """
 
 from django import template
