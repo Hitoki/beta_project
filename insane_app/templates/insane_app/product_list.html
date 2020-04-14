@@ -1,24 +1,26 @@
 {% extends 'insane_app/base.html' %}
 
 {% block left_bar %}
-<form action="" method="get">
-  <div class="card m-2">
-    <div class="card-body">
-      <h5 class="card-title">Category</h5>
-        <select id="categories" name="categories" class="custom-select custom-select-sm" multiple>
-          {% for category in category_set %}
-            <option value="{{category.id}}">{{category}}</option>
-          {% endfor %}
-        </select>
-        <input type="submit" class="btn btn-primary m-2" name="category_filter" value="Apply filter">
+  <form action="" method="get">
+    <div class="card m-2">
+      <div class="card-body">
+        <h5 class="card-title">Category</h5>
+          <select id="categories" name="categories" class="custom-select custom-select-sm" multiple>
+            {% for category in category_set %}
+              <option value="{{category.id}}">{{category}}</option>
+            {% endfor %}
+          </select>
+          <input type="submit" class="btn btn-primary m-2" name="category_filter" value="Apply filter">
+      </div>
     </div>
-  </div>
-</form>
-  <div class="card m-2">
-    <div class="card-body">
-      <a class="card-link" href="{% url 'insane:create_product' %}">Create new product</a>
+  </form>
+  {% if user.is_authenticated %}
+    <div class="card m-2">
+      <div class="card-body">
+        <a class="card-link" href="{% url 'insane:create_product' %}">Create new product</a>
+      </div>
     </div>
-  </div>
+  {% endif %}
 {% endblock %}
 
 {% block body %}

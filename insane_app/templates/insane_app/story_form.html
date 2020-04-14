@@ -1,0 +1,19 @@
+{% extends 'insane_app/base.html' %}
+
+{% block body %}
+  <div class="jumbotron">
+    {{form.errors}}
+    <form class="" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Story name</label>
+        <input type="text" id="name" name="name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="body">Text</label>
+        <textarea class="form-control" id="body" name="body" rows="7"></textarea>
+      </div>
+      <input type="submit" value="Create">
+    </form>
+  </div>
+{% endblock %}

@@ -58,6 +58,13 @@ class StoryCreateView(CreateView):
     model = Story
     fields = ('name', 'body')
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.author = self.request.user
+        self.object.save()
+        
+        return redirect(self.get_success_url())
+
 
 class ProductListView(ListView):
 
@@ -104,8 +111,8 @@ class ProductCreateView(CreateView):
         self.object = form.save(commit=False)
         self.object.owner = self.request.user
         categories = self.request.POST.getlist('categories', ())
-        print(categories)
         self.object.save()
+
         if categories:
             self.object.categories.set(Category.objects.filter(pk__in=categories))
         return redirect(self.get_success_url())

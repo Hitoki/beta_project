@@ -1,6 +1,16 @@
 {% extends 'insane_app/base.html' %}
 {% load humanize %}
 
+{% block left_bar %}
+  {% if user.is_authenticated %}
+    <div class="card m-2">
+      <div class="card-body">
+        <a class="card-link" href="{% url 'insane:create_story' %}">Create new story</a>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
 {% block body %}
   <div class="list-group list-group-flush">
     {% for story in object_list %}
