@@ -14,41 +14,21 @@
 
   <!-- Bootstrap core CSS -->
   <link href="{% static 'cinema/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'cinema/css/main.css' %}" rel="stylesheet">
 
   <!-- Favicons -->
   <link rel="apple-touch-icon"
         href="{% static 'cinema/img/favicon-180.png' %}" sizes="180x180">
-  <link rel="manifest"
-        href="https://getbootstrap.com/docs/4.4/assets/img/favicons/manifest.json">
+  <link rel="manifest" href="#">
   <link rel="icon" href="{% static 'cinema/img/favicon.ico' %}">
   <meta name="msapplication-config"
         content="/docs/4.4/assets/img/favicons/browserconfig.xml">
   <meta name="theme-color" content="#563d7c">
 
-  <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
-  </style>
-
   <!-- Custom styles for this template -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
+        rel="stylesheet">
   <link href="{% static 'cinema/css/jumbotron.css' %}" rel="stylesheet">
-  <link href="{% static 'cinema/css/font-awesome.min.css' %}" rel="stylesheet"
-        integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1"
-        crossorigin="anonymous">
-
+  <link href="{% static 'cinema/css/main.css' %}" rel="stylesheet">
   <script type="text/javascript" async=""
           src="{% static 'cinema/js/1eaefda9f709934a5d.js' %}">
   </script>
@@ -56,7 +36,7 @@
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top content">
-  <a class="navbar-brand py-0" href="{% url 'cinema:product-list' %}">
+  <a class="navbar-brand py-0" href="{% url 'cinema:index-list' %}">
     <img style="width: auto !important; height: 40px !important;"
          src="{% static 'cinema/img/cinema_logo_gold.png' %}"
          alt="Cinema logo picture">
@@ -75,11 +55,15 @@
            aria-expanded="false">Blu-ray
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="#">Best Sellers</a>
-          <a class="dropdown-item" href="#">New Releases</a>
-          <a class="dropdown-item" href="#">Top rated</a>
-          <a class="dropdown-item" href="#">Shop by Genre</a>
-          <a class="dropdown-item" href="#">Shop by Actor</a>
+          <a class="dropdown-item active"
+             href="{% url 'cinema:product-list' %}">Blu-ray
+          </a>
+          <a class="dropdown-item"
+             href="{% url 'cinema:top-rated-product-list' %}">Top rated
+          </a>
+          <a class="dropdown-item"
+             href="{% url 'cinema:new-releases-product-list' %}">New Releases
+          </a>
         </div>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle font-weight-bold"
@@ -87,9 +71,12 @@
            aria-expanded="false">Kinonews
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdown02">
-          <a class="dropdown-item" href="{% url 'cinema:news-list' %}">News</a>
-          <a class="dropdown-item" href="#">Premieres</a>
-          <a class="dropdown-item" href="#">Articles</a>
+          <a class="dropdown-item active"
+             href="{% url 'cinema:news-list' %}">Movie News
+          </a>
+          <a class="dropdown-item"
+             href="{% url 'cinema:celebrity-news-list' %}">Celebrity News
+          </a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -98,17 +85,32 @@
            aria-expanded="false">Movies
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdown03">
-          <a class="dropdown-item" href="">Top Rated Movies</a>
-          <a class="dropdown-item" href="#">Top Box Office</a>
-          <a class="dropdown-item" href="#">Navigator</a>
+          <a class="dropdown-item active"
+             href="{% url 'cinema:film-list' %}">Movies
+          </a>
+          <a class="dropdown-item"
+             href="{% url 'cinema:top-rated-film-list' %}">Top Rated
+          </a>
+          <a class="dropdown-item"
+             href="{% url 'cinema:budget-film-list' %}">Budget Box Office
+          </a>
+          <a class="dropdown-item"
+             href="{% url 'cinema:usa-gross-film-list' %}">USA Gross Box Office
+          </a>
+          <a class="dropdown-item"
+             href="{% url 'cinema:world-gross-film-list' %}">World Gross Box Office
+          </a>
         </div>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search"
+    <form class="form-inline my-2 my-lg-0"
+          action="{% url 'cinema:search_results' %}"
+          method="get">
+      <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search"
              aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        Search</button>
+        Search
+      </button>
     </form>
   </div>
 </nav>
@@ -120,44 +122,62 @@
 
 
     {% block pagination %}
+
     {% if is_paginated %}
-      <div class="pagination">
+
+    <div class="pagination">
         <span class="page-links">
+
           {% if page_obj.has_previous %}
-            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous
+
+            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">
+              previous
             </a>
+
           {% endif %}
+
             <span class="page-current">
               Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
             </span>
+
           {% if page_obj.has_next %}
-            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+
+            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">
+              next
+            </a>
+
           {% endif %}
+
         </span>
-      </div>
+    </div>
+
     {% endif %}
+
     {% endblock pagination %}
 
   </div> <!-- /container -->
 </main>
 
 <footer class="container-fluid content">
-  <div class="d-flex flex-row justify-content-center align-items-center">
-    <div class="p-3 h3 text-danger">18+</div>
-    <div class="p-3 text-white">Copyright © 2020 CINEMA. All rights reserved</div>
-    <div class="p-3 text-white text-right">
-      <small>Using materials, a reference to this site is required
-        <br>Website development - <u>Yurii Borovenskyi</u>
-      </small>
+  <div class="row p-2 justify-content-center align-items-center">
+    <div class="col-md-auto text-center h3"
+         style="color: #ec0505;">18+</div>
+    <div class="col-md-auto text-white text-center">
+      Copyright © 2020 CINEMA. All rights reserved
+    </div>
+    <div class="col-md-auto text-white text-right small">
+      Using materials, a reference to this site is required<br>
+      Website development - <u>Yurii Borovenskyi</u>
     </div>
   </div>
 </footer>
+</body>
 
 <script src="{% static 'cinema/js/jquery-3.4.1.slim.min.js' %}"></script>
 <script src="{% static 'cinema/js/popper.min.js' %}"></script>
 <script src="{% static 'cinema/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'cinema/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'cinema/js/jquery.min.js' %}"></script>
+<script src="{% static 'cinema/js/product_carousel.js' %}"></script>
 
-</body>
 </html>

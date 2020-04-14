@@ -1,0 +1,17 @@
+<div class="card bg-white">
+  <div class="card-body p-0">
+    <div class="row">
+      <div class="col-md-2 align-self-center">
+        <a href="{% url url_name object.pk %}">
+          <img src="{{ image }}">
+        </a>
+      </div>
+      <div class="col-md-10 align-self-center">
+        <a href="{% url url_name object.pk %}">
+          <h5>{{ title }}</h5>
+        </a>
+        <p>({{ extra }})</p>
+      </div>
+    </div>
+  </div>
+</div>

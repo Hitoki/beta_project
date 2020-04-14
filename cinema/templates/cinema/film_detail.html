@@ -1,5 +1,7 @@
 {% extends 'cinema/base_cinema_detail.html' %}
 
+{% load get_text_hyperlinks_filter %}
+
 {% block description %}{{ film.title }}{% endblock %}
 
 
@@ -28,7 +30,7 @@
 {% block page_overview_title %}Storyline:{% endblock %}
 
 
-{% block page_overview_description %}{{ film.description }}{% endblock %}
+{% block page_overview_description %}{{ film.description|get_text_hyperlinks|safe }}{% endblock %}
 
 
 {% block page_extra_info %}
@@ -42,5 +44,11 @@
 
 
 {% block page_related_news %}
-{% include "cinema/includes/inc_cinema_related_news.html" with cinema=film %}
+
+{% if related_news %}
+
+{% include "cinema/includes/inc_cinema_related_news.html" with cinema=related_news %}
+
+{% endif %}
+
 {% endblock page_related_news %}

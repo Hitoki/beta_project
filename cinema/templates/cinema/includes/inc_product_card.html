@@ -1,0 +1,35 @@
+{% load get_key_filter %}
+
+<div class="card text-center h-100">
+  <a href="{% url 'cinema:product-detail' product.pk %}">
+    <img src="{{ product.film.poster.url }}"
+         class="card-img-top"
+         alt="{{ product.film.title }} picture"
+         title="{{ product.film.title }}">
+  </a>
+  <div class="card-body py-3 px-0">
+    <a href="{% url 'cinema:product-detail' product.pk %}">
+      <div class="{{ title }} card-title m-0">{{ product.film.title }}</div>
+    </a>
+    <p class="card-text m-1" style="font-size: {{ text }};">
+
+      {% for actor in persons_by_films|get_key:product.film.pk|get_key:"Actor"|slice:":3" %}
+
+        <a class="text-dark" href="{% url 'cinema:movie-person-detail' actor.pk %}">
+          {{ actor.name }}</a>{% if not forloop.last %},{% endif %}
+
+      {% endfor %}
+
+    </p>
+    <p class="card-text small my-1">Blu-ray</p>
+    <div class="{{ price }} card-text m-0" style="color: #ec0505;">
+      ${{ product.price }}
+    </div>
+  </div>
+  <div class="card-footer p-0 my-0">
+    <button type="button"
+            class="btn btn-primary btn-sm btn-block active btn-success"
+            aria-pressed="true" title="Add to Cart">Buy Now
+    </button>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+{% for news in news_list|slice:":5" %}
+
+<!--Item slider-->
+<div class="carousel-item{% cycle ' active' '' '' '' '' %}">
+  <div class="card border-0 rounded-0 text-light overflow zoom">
+    <div class="position-relative">
+      <!--thumbnail img-->
+      <div class="ratio_left-cover-1 image-wrapper">
+        <a href="{% url 'cinema:news-detail' news.pk %}">
+          <img class="img-fluid w-100"
+               src="{{ news.news_detail_photo.url }}"
+               alt="{{ news.title }} picture"
+               title="{{ news.title }}">
+        </a>
+      </div>
+      <div class="position-absolute p-2 p-lg-3 b-0 w-100 bg-shadow">
+        <!--title-->
+        <a href="{% url 'cinema:news-detail' news.pk %}">
+          <h4 class="text-white my-0">
+            {{ news.title }}
+          </h4>
+        </a>
+        <!-- meta title -->
+        <div class="news-meta">
+        <span class="news_source small">
+          {{ news.news_source }}
+        </span>
+          <span class="news-date pl-3 small">
+          {{ news.created_at|date:"j M Y H:i" }}
+        </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end item slider-->
+
+{% endfor %}

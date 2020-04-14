@@ -2,7 +2,7 @@
   <p class="detail_info_heading">Article:
     <span class="detail_info_text">{{ product.pk }}</span>
   </p>
-  <h4 class="detail_price_heading text-danger">${{ product.price }}</h4>
+  <h4 class="detail_price_heading" style="color: #ec0505;">${{ product.price }}</h4>
   <span class="detail_info_text">
 
     {% if product.in_stock %}In stock{% else %}Out of stock{% endif %}</span>

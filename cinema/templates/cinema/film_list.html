@@ -1,0 +1,139 @@
+{% extends 'cinema/base.html' %}
+
+{% load static humanize datetime_filter get_key_filter %}
+
+{% block description %}{{ page_title }}{% endblock %}
+
+
+{% block title %}{{ page_title }}{% endblock %}
+
+
+{% block main_content %}
+
+<div class="row mt-1 mb-3">
+  <div class="col-md-12 text-center">
+    <h1>{{ page_title }}</h1>
+
+    {% if page_description %}
+
+    <h6>{{ page_description }}</h6>
+
+    {% endif %}
+
+  </div>
+</div>
+<div class="row d-flex">
+  <div class="col-md-12">
+
+    {% for film in film_list %}
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card bg-white">
+          <div class="film-body">
+            <div class="row">
+              <div class="col-md-3 align-self-center">
+                <a href="{% url 'cinema:film-detail' film.pk %}">
+                  <img src="{{ film.poster.url }}">
+                </a>
+              </div>
+              <div class="col-md-7 align-self-center">
+                <div class="film-title text-justify d-flex flex-row py-2">
+                  <a href="{% url 'cinema:film-detail' film.pk %}">
+                    <h5><span class="text-body">{{ forloop.counter }}.</span>
+                      <b>{{ film.title }}</b><span class="text-body">, {{ film.year }}</span></h5>
+                  </a>
+                </div>
+                <div class="film-text text-justify">
+
+                  {% with countries=info_by_films|get_key:film.pk|get_key:'country__name' %}
+
+                  <p><strong>Countr{{ countries|pluralize:"y,ies" }}:</strong>
+                    {% for country in countries|dictsort:0 %}
+                    <a href="{% url 'cinema:country-film-list' country %}">{{ country }}</a>
+                    {% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                  </p>
+
+                  {% endwith %}
+
+                  {% with genres=info_by_films|get_key:film.pk|get_key:'genre__name' %}
+
+                  <p><strong>Genre{{ genres|pluralize:"s" }}:</strong>
+                    {% for genre in genres|dictsort:0 %}
+                    <a href="{% url 'cinema:genre-film-list' genre %}">{{ genre }}</a>
+                    {% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                  </p>
+
+                  {% endwith %}
+
+                  {% with film_persons=persons_by_films|get_key:film.pk %}
+
+                  {% for profession, persons in film_persons.items %}
+
+                  <p><strong>{{ profession }}{{ persons|pluralize:"s" }}:</strong>
+
+                    {% for person in persons|slice:":3" %}
+
+                    <a href="{% url 'cinema:movie-person-detail' person.pk %}">
+                      {{ person.name }}</a>{% if not forloop.last %},{% endif %}
+
+                    {% endfor %}
+
+                  </p>
+
+                  {% endfor %}
+
+                  {% endwith %}
+
+                  <p><strong>Runtime:</strong> {{ film.run_time|format_datetime }}</p>
+                  <p>
+
+                    {% if criterion_name == "IMDb Rating" %}
+
+                      <strong>{{ criterion_name }}: </strong>{{ film.imdb_rating.value }}
+
+                    {% elif criterion_name == "Budget" %}
+
+                      <strong>{{ criterion_name }}: </strong>${{ film.budget|intword }}
+
+                    {% elif criterion_name == "USA Gross" %}
+
+                      <strong>{{ criterion_name }}: </strong>${{ film.usa_gross|intword }}
+
+                    {% elif criterion_name == "World Gross" %}
+
+                      <strong>{{ criterion_name }}: </strong>${{ film.world_gross|intword }}
+
+                    {% endif %}
+
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-2 align-self-center">
+                <p align="center">
+                  <img src="{% static 'cinema/img/imdb_star_logo.png' %}"
+                       alt="IMDb star logo picture">{{ film.imdb_rating.value }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% empty %}
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <h4>No results found...</h4>
+      </div>
+    </div>
+
+    {% endfor %}
+
+  </div>
+</div>
+
+{% endblock main_content %}

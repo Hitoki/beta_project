@@ -1,5 +1,7 @@
 {% extends 'cinema/base_cinema_detail.html' %}
 
+{% load get_text_hyperlinks_filter %}
+
 {% block description %}{{ cinema_person.fullname }}{% endblock %}
 
 
@@ -20,9 +22,7 @@
   <tbody class="align-top">
   <tr>
     <th scope="col">Gender:</th>
-    <td>
-      <a href="#">{{ cinema_person.get_gender_display }}</a>
-    </td>
+    <td>{{ cinema_person.get_gender_display }}</td>
   </tr>
   <tr>
     <th scope="col">Age:</th>
@@ -35,40 +35,43 @@
   <tr>
     <th scope="col">Country:</th>
     <td>
-      <a href="#">{{ cinema_person.country }}</a>
+      <a href="{% url 'cinema:country-film-list' cinema_person.country %}">
+        {{ cinema_person.country }}
+      </a>
     </td>
   </tr>
   <tr>
     <th scope="col">Career:</th>
     <td>
 
-      {% for profession in cinema_person.professions %}
+      {% for profession in person_professions %}
 
-      <a href="#">{{ profession }}</a>{% if not forloop.last %},{% endif %}
+      {{ profession }}{% if not forloop.last %},{% endif %}
 
       {% endfor %}
 
     </td>
   </tr>
   <tr>
-    <th scope="col">Genres:</th>
+    <th scope="col">Genre{{ genres|pluralize:"s" }}:</th>
     <td>
 
-      {% for genre in cinema_person.genres %}
+      {% for genre in genres %}
 
-      <a href="#">{{ genre }}</a>{% if not forloop.last %},{% endif %}
+      <a href="{% url 'cinema:genre-film-list' genre %}">{{ genre }}</a>
+      {% if not forloop.last %},{% endif %}
 
       {% endfor %}
 
     </td>
   </tr>
   <tr>
-    <th scope="col">Movies:</th>
-    <td>{{ cinema_person.film_set.distinct.count }}</td>
+    <th scope="col">Mov{{ number_of_films|pluralize:"y,ies" }}:</th>
+    <td>{{ number_of_films }}</td>
   </tr>
   <tr>
     <th scope="col">Years:</th>
-    <td>{{ cinema_person.year_range }}</td>
+    <td>{{ years_of_films }}</td>
   </tr>
 
   </tbody>
@@ -85,19 +88,17 @@
 {% block page_overview_title %}Biography:{% endblock %}
 
 
-{% block page_overview_description %}{{ cinema_person.bio }}{% endblock %}
+{% block page_overview_description %}{{ cinema_person.bio|get_text_hyperlinks|safe }}{% endblock %}
 
 
 {% block page_extra_info %}
 
 <div class="row mt-2">
-  <div class="col-12">
-    <div class="row">
-      <p class="detail_extra_heading pl-2">Filmography</p>
-    </div>
+  <div class="col-md-12">
+    <p class="detail_extra_heading pl-2">Filmography</p>
     <div class="row d-flex justify-content-center">
 
-      {% for profession, films in cinema_person.filmography.items %}
+      {% for profession, films in filmography.items %}
 
       <p class="font-weight-bold">{{ profession }}</p>
       <table class="table table-responsive table-striped d-flex justify-content-center">
@@ -140,5 +141,5 @@
 
 
 {% block page_related_news %}
-{% include "cinema/includes/inc_cinema_related_news.html" with cinema=cinema_person %}
+{% include "cinema/includes/inc_cinema_related_news.html" %}
 {% endblock page_related_news %}

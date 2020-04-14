@@ -5,16 +5,16 @@
   <tr>
     <th scope="col">Year:</th>
     <td>
-      <a href="#">{{ cinema.year }}</a>
+      <a href="{% url 'cinema:year-film-list' cinema.year %}">{{ cinema.year }}</a>
     </td>
   </tr>
   <tr>
-    <th scope="col">Country:</th>
+    <th scope="col">Countr{{ countries|pluralize:"y,ies" }}:</th>
     <td>
 
-      {% for country in cinema.country.all %}
+      {% for country in countries %}
 
-      <a href="#"> {{ country }}</a>
+      <a href="{% url 'cinema:country-film-list' country %}"> {{ country }}</a>
       {% if not forloop.last %} |{% endif %}
 
       {% endfor %}
@@ -22,60 +22,37 @@
     </td>
   </tr>
   <tr>
-    <th scope="col">Genre:</th>
+    <th scope="col">Genre{{ genres|pluralize:"s" }}:</th>
     <td>
 
-      {% for genre in cinema.genre.all %}
+      {% for genre in genres %}
 
-      <a href="#"> {{ genre }}</a>
+      <a href="{% url 'cinema:genre-film-list' genre %}"> {{ genre }}</a>
       {% if not forloop.last %} |{% endif %}
 
       {% endfor %}
 
     </td>
   </tr>
+
+  {% for profession, persons in film_persons.items %}
+
   <tr>
-    <th scope="col">Director:</th>
+    <th scope="col">{{ profession }}{{ persons|pluralize:"s" }}:</th>
     <td>
 
-      {% for director in cinema.directors %}
+      {% for person in persons %}
 
-      <a href="{% url 'cinema:movie-person-detail' director.pk %}">
-        {{ director.user__first_name }}
-        {{ director.user__last_name }}</a>{% if not forloop.last %},{% endif %}
-
-      {% endfor %}
-
-    </td>
-  </tr>
-  <tr>
-    <th scope="col">Actors:</th>
-    <td width="100%">
-
-      {% for actor in cinema.actors %}
-
-      <a href="{% url 'cinema:movie-person-detail' actor.pk %}">
-        {{ actor.user__first_name }}
-        {{ actor.user__last_name }}</a>{% if not forloop.last %},{% endif %}
+      <a href="{% url 'cinema:movie-person-detail' person.pk %}">
+        {{ person.name }}</a>{% if not forloop.last %},{% endif %}
 
       {% endfor %}
 
     </td>
   </tr>
-  <tr>
-    <th scope="col">Writer:</th>
-    <td>
 
-      {% for writer in cinema.writers %}
+  {% endfor %}
 
-      <a href="{% url 'cinema:movie-person-detail' writer.pk %}">
-        {{ writer.user__first_name }}
-        {{ writer.user__last_name }}</a>{% if not forloop.last %},{% endif %}
-
-      {% endfor %}
-
-    </td>
-  </tr>
   <tr>
     <th scope="col">Runtime:</th>
     <td>

@@ -1,0 +1,83 @@
+{% extends 'cinema/base.html' %}
+
+{% block description %}{{ search_title }}"{{ query }}"{% endblock %}
+
+
+{% block title %}{{ search_title }}"{{ query }}"{% endblock %}
+
+
+{% block main_content %}
+
+<div class="row">
+  <div class="col-md-9">
+
+    {% if product_list or film_list or person_list or news_list %}
+
+      <h3 class="text-danger">{{ search_title }}"<b>{{ query }}</b>"</h3>
+
+      {% if product_list %}
+
+        <h4 class="pt-2">Movies on blu-ray found: {{ product_list.count }}</h4>
+
+        {% for product in product_list %}
+
+{% include "cinema/includes/inc_search.html" with object=product url_name='cinema:product-detail' image=product.film.poster.url title=product.film.title extra='Blu-ray' %}
+
+        {% endfor %}
+
+      {% endif %}
+
+      {% if film_list %}
+
+        <h4 class="pt-2">Movies found: {{ film_list.count }}</h4>
+
+        {% for film in film_list %}
+
+{% include "cinema/includes/inc_search.html" with object=film url_name='cinema:film-detail' image=film.poster.url title=film.title extra=film.year %}
+
+        {% endfor %}
+
+      {% endif %}
+
+      {% if person_list %}
+
+        <h4 class="pt-2">Cinema persons found: {{ person_list.count }}</h4>
+
+        {% for person in person_list %}
+
+{% include "cinema/includes/inc_search.html" with object=person url_name='cinema:movie-person-detail' image=person.avatar.url title=person.fullname extra=person.birthday|date:"Y" %}
+
+        {% endfor %}
+
+      {% endif %}
+
+      {% if news_list %}
+
+        <h4 class="pt-2">Cinema news found: {{ news_list.count }}</h4>
+
+        {% for news in news_list %}
+
+{% include "cinema/includes/inc_search.html" with object=news url_name='cinema:news-detail' image=news.news_feed_photo.url title=news.title extra=news.created_at|date:"j M Y H:i" %}
+
+        {% endfor %}
+
+      {% endif %}
+
+    {% else %}
+
+      <h3 class="text-danger">{{ no_results }}<b>"{{ query }}"</b></h3>
+
+    {% endif %}
+
+  </div>
+  <div class="col-md-3">
+
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 rated IMDb movies" top_5=imdb_top_5 criterion="imdb_top_5" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 most expensive movies" top_5=budget_top_5 criterion="budget_top_5" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 most USA grossing movies" top_5=usa_gross_top_5 criterion="usa_gross_top_5" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 most world grossing movies" top_5=world_gross_top_5 criterion="world_gross_top_5" %}
+
+  </div>
+</div>
+
+{% endblock main_content %}

@@ -1,22 +1,14 @@
-<div class="news-cats">
-  <ul class="list-unstyled list-inline mb-1">
-    <li class="list-inline-item">
-      <i class="fa fa-folder-o text-danger"></i>
-      <a href="#">
-        <small>{{ news.news_source }}</small>
-      </a>
-    </li>
-    <li class="list-inline-item">
-      <i class="fa fa-folder-o text-danger"></i>
-      <a href="#">
-        <small>{{ news.news_author }}</small>
-      </a>
-    </li>
-    <li class="list-inline-item">
-      <i class="fa fa-folder-o text-danger"></i>
-      <a href="#">
-        <small>{{ news.created_at|date:"j M Y" }}</small>
-      </a>
-    </li>
-  </ul>
-</div>
+<ul class="list-unstyled list-inline mb-1">
+  <li class="list-inline-item">
+    <i class="fa fa-users" aria-hidden="true"></i>
+      <small>{{ news.news_source }}</small>
+  </li>
+  <li class="list-inline-item">
+    <i class="fa fa-user"></i>
+      <small>{{ news.news_author }}</small>
+  </li>
+  <li class="list-inline-item">
+    <i class="fa fa-calendar"></i>
+      <small>{{ news.created_at|date:"j M Y H:i" }}</small>
+  </li>
+</ul>

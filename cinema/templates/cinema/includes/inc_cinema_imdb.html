@@ -8,9 +8,8 @@
              alt="IMDb logo picture"
              title="IMDb Rating">
     </td>
-    <td>
-      <a href="#">{{ cinema.imdb_rating }}</a>
-      <small>/10</small>
+    <td class="text-primary">
+      {{ cinema.imdb_rating }}<small class="text-dark">/10</small>
     </td>
     <td>
       <img src="{% static 'cinema/img/imdb_star_logo.png' %}"

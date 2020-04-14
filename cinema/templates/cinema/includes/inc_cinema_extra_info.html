@@ -1,44 +1,47 @@
 <div class="row mt-2">
-  <p class="detail_extra_heading pl-2">Details</p>
-  <table class="table table-responsive table-striped">
-    <tbody>
-    {{ film_format }}
-    <tr>
-      <th scope="col">Release Date:</th>
-      <td>{{ cinema.release_data|date:"j M Y" }}</td>
-    </tr>
-    <tr>
-      <th scope="col">Language:</th>
-      <td>
+  <div class="col-md-12">
+    <p class="detail_extra_heading pl-2">Details</p>
+    <table class="table table-responsive table-striped">
+      <tbody>
+      {{ film_format }}
+      <tr>
+        <th scope="col">Release Date:</th>
+        <td>{{ cinema.release_data|date:"j M Y" }}</td>
+      </tr>
+      <tr>
+        <th scope="col">Language{{ languages|pluralize:"s" }}:</th>
+        <td>
 
-        {% for language in cinema.language.all %}
+          {% for language in languages %}
 
-        <a href="#"> {{ language }}</a>
-        {% if not forloop.last %} |{% endif %}
+          <a href="{% url 'cinema:language-film-list' language %}">{{ language }}</a>
+          {% if not forloop.last %} |{% endif %}
 
-        {% endfor %}
+          {% endfor %}
 
-      </td>
-    </tr>
-    <tr>
-      <th scope="col">Distributor:</th>
-      <td>
+        </td>
+      </tr>
+      <tr>
+        <th scope="col">Distributor{{ distributors|pluralize:"s" }}:</th>
+        <td>
 
-        {% for distributor in cinema.distributor.all %}
+          {% for distributor in distributors %}
 
-        <a href="#"> {{ distributor }}</a>
-        {% if not forloop.last %} |{% endif %}
+          <a href="{% url 'cinema:distributor-film-list' distributor %}">{{ distributor }}</a>
+          {% if not forloop.last %} |{% endif %}
 
-        {% endfor %}
+          {% endfor %}
 
-      </td>
-    </tr>
-    <tr>
-      <th scope="col">MPAA:</th>
-      <td>
-        <a href="#">{{ cinema.mpaa_rating }}</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+        </td>
+      </tr>
+      <tr>
+        <th scope="col">MPAA:</th>
+        <td>
+          <a href="{% url 'cinema:mpaa-film-list' cinema.mpaa_rating.pk %}">
+            {{ cinema.mpaa_rating.value }}</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
