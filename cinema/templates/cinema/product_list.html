@@ -2,59 +2,27 @@
 
 {% load static %}
 
-{% block description %}
-
-Buy Movies on Blu-ray - View our list of most popular movies
-
-{% endblock description %}
+{% block description %}{{ page_title }}{% endblock description %}
 
 
-{% block title %}
-
-Buy Movies on Blu-ray - View our list of most popular movies
-
-{% endblock title %}
+{% block title %}{{ page_title }}{% endblock title %}
 
 
 {% block main_content %}
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 d-flex">
+<div class="row mt-1 mb-3">
+  <div class="col-md-12 text-center">
+    <h1>{{ page_title }}</h1>
+  </div>
+</div>
+<div class="row row-cols-md-4">
 
   {% for product in product_list %}
 
-  <div class="col d-flex mb-4">
-    <div class="card p-0">
-      <a href="{% url 'cinema:product-detail' product.pk %}">
-        <img src="{{ product.film.poster.url }}"
-             class="card-img-top"
-             alt="{{ product.film.title }} picture"
-             title="{{ product.film.title }}">
-      </a>
-      <div class="card-body pb-2">
-        <a href="{% url 'cinema:product-detail' product.pk %}">
-          <h5 class="card-title">{{ product.film.title }}</h5>
-        </a>
-        <p class="card-text mb-auto">
+  <div class="col mb-4">
 
-          {% for actor in product.film.actors|slice:":3" %}
+  {% include "cinema/includes/inc_product_card.html" with title="h5" text="100%" price="h4" %}
 
-            <a class="text-dark" href="{% url 'cinema:movie-person-detail' actor.pk %}">
-              {{ actor.user__first_name }}
-              {{ actor.user__last_name }}</a>{% if not forloop.last %},{% endif %}
-
-          {% endfor %}
-
-        </p>
-        <small class="card-text">Blu-ray</small>
-        <h5 class="card-text text-danger">${{ product.price }}</h5>
-      </div>
-      <div class="card-footer text-center p-0">
-        <button type="button"
-                class="btn btn-primary btn-sm btn-block active btn-success"
-                aria-pressed="true" title="Add to Cart">Buy Now
-        </button>
-      </div>
-    </div>
   </div>
 
   {% endfor %}

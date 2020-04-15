@@ -1,24 +1,29 @@
+{% if related_news %}
+
 <div class="row mt-2">
-  <p class="detail_extra_heading pl-2">Related News</p>
-  <table class="table table-responsive table-striped d-flex justify-content-center">
-    <tbody>
+  <div class="col-md-12">
+    <p class="detail_extra_heading pl-2">Related News</p>
+    <table class="table table-responsive table-striped d-flex justify-content-center">
+      <tbody>
 
-    {% for news in cinema.related_news %}
+      {% for news_pk, news_title in related_news.items %}
 
-    <tr>
-      <td class="align-middle">
-        {{ forloop.counter }}.
-      </td>
-      <td class="align-middle" width=600px>
-        <a href="{% url 'cinema:news-detail' news.pk %}">
-          {{ news.title }}
-        </a>
-      </td>
-    </tr>
+      <tr>
+        <td class="align-middle">
+          {{ forloop.counter }}.
+        </td>
+        <td class="align-middle" width=600px>
+          <a href="{% url 'cinema:news-detail' news_pk %}">
+            {{ news_title }}
+          </a>
+        </td>
+      </tr>
 
-    {% endfor %}
+      {% endfor %}
 
-    </tbody>
-  </table>
-
+      </tbody>
+    </table>
+  </div>
 </div>
+
+{% endif %}

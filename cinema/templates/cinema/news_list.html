@@ -1,16 +1,18 @@
 {% extends 'cinema/base.html' %}
 
-{% block description %}Latest Movie News{% endblock %}
+{% load get_text_hyperlinks_filter %}
+
+{% block description %}{{ page_title }}{% endblock %}
 
 
-{% block title %}Latest Movie News{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 
 
 {% block main_content %}
 
-<div class="row mb-2">
-  <div class="col-md-9">
-    <h4 class="font-weight-bold text-center text-danger">Movie News</h4>
+<div class="row mt-1 mb-3">
+  <div class="col-md-9 text-center">
+    <h1>{{ page_title }}</h1>
   </div>
 </div>
 <div class="row">
@@ -23,19 +25,25 @@
         <div class="card bg-white">
           <div class="card-body">
             <div class="row">
-              <div class="col-md-3">
-                <img src="{{ news.news_feed_photo.url }}">
+              <div class="col-md-3 align-self-center">
+                <img src="{{ news.news_feed_photo.url }}"
+                     title="{{ news.title }}"
+                     height="250px"
+                     width="180">
               </div>
-              <div class="col-md-9">
+              <div class="col-md-9 align-self-center">
                 <div class="news-title">
                   <a href="{% url 'cinema:news-detail' news.pk %}">
-                    <h5>{{ news.title }}</h5>
+                    <h5 class="font-weight-bold">{{ news.title }}</h5>
                   </a>
                 </div>
+                <div class="news-cats pb-1">
 
-                {% include "cinema/includes/inc_news_source.html" %}
+                  {% include "cinema/includes/inc_news_source.html" %}
 
-                {% include "cinema/includes/inc_news_content.html" with content=news.description|truncatewords_html:50 %}
+                </div>
+
+                {% include "cinema/includes/inc_news_content.html" with content=news.description|truncatechars_html:350|get_text_hyperlinks|safe %}
 
                 <a href="{% url 'cinema:news-detail' news.pk %}">
                   <button type="button" class="btn btn-sm btn-outline-primary">
@@ -54,9 +62,10 @@
   </div>
   <div class="col-md-3">
 
-    {% include "cinema/includes/inc_news_top_rated_by_imdb.html" %}
-    {% include "cinema/includes/inc_news_top_rated_by_budget.html" %}
-    {% include "cinema/includes/inc_news_top_rated_by_usa_gross.html" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 rated IMDb movies" top_5=imdb_top_5 criterion="imdb_top_5" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 most expensive movies" top_5=budget_top_5 criterion="budget_top_5" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 most USA grossing movies" top_5=usa_gross_top_5 criterion="usa_gross_top_5" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 most world grossing movies" top_5=world_gross_top_5 criterion="world_gross_top_5" %}
 
   </div>
 </div>

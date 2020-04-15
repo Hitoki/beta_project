@@ -1,19 +1,23 @@
+{% load humanize %}
+
 <div class="row mt-2">
-  <p class="detail_extra_heading pl-2">Box Office</p>
-  <table class="table table-responsive table-striped">
-    <tbody>
-    <tr>
-      <th scope="col">Budget:</th>
-      <td>${{ cinema.budget }}</td>
-    </tr>
-    <tr>
-      <th scope="col">USA Gross:</th>
-      <td>${{ cinema.usa_gross }}</td>
-    </tr>
-    <tr>
-      <th scope="col">World Gross:</th>
-      <td>${{ cinema.world_gross }}</td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="col-md-12">
+    <p class="detail_extra_heading pl-2">Box Office</p>
+    <table class="table table-responsive table-striped">
+      <tbody>
+      <tr>
+        <th scope="col">Budget:</th>
+        <td>${{ cinema.budget|intword }}</td>
+      </tr>
+      <tr>
+        <th scope="col">USA Gross:</th>
+        <td>${{ cinema.usa_gross|intword }}</td>
+      </tr>
+      <tr>
+        <th scope="col">World Gross:</th>
+        <td>${{ cinema.world_gross|intword }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

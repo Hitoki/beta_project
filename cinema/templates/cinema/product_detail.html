@@ -1,5 +1,7 @@
 {% extends 'cinema/base_cinema_detail.html' %}
 
+{% load get_text_hyperlinks_filter %}
+
 {% block description %}{{ product.film.title }} [Blu-ray]{% endblock %}
 
 
@@ -22,14 +24,14 @@
 
 {% block page_oscar_price %}
 {% include "cinema/includes/inc_cinema_oscar.html" with cinema=product.film %}
-{% include "cinema/includes/inc_cinema_price.html" with cinema=product.film %}
+{% include "cinema/includes/inc_cinema_price.html" %}
 {% endblock page_oscar_price %}
 
 
 {% block page_overview_title %}Storyline:{% endblock %}
 
 
-{% block page_overview_description %}{{ product.film.description }}{% endblock %}
+{% block page_overview_description %}{{ product.film.description|get_text_hyperlinks|safe }}{% endblock %}
 
 
 {% block page_extra_info %}

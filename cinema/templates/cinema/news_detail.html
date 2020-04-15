@@ -1,5 +1,7 @@
 {% extends 'cinema/base.html' %}
 
+{% load get_text_hyperlinks_filter %}
+
 {% block description %}{{ news.title }}{% endblock %}
 
 
@@ -16,19 +18,22 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
-                <div class="news-title">
-                  <h2>{{ news.title }}</h2>
+                <div class="news-title text-center">
+                  <h1 class="text-body">{{ news.title }}</h1>
+                </div>
+                <div class="news-image py-2" align="center">
+                  <img src="{{ news.news_detail_photo.url }}"
+                       title="{{ news.title }}">
                 </div>
 
-                {% include "cinema/includes/inc_news_source.html" %}
+                {% include "cinema/includes/inc_news_content.html" with content=news.description|get_text_hyperlinks|safe|linebreaks %}
 
                 <hr>
-                <div class="news-image">
-                  <img src="{{ news.news_detail_photo.url }}">
+                <div class="news-cats" align="center">
+
+                  {% include "cinema/includes/inc_news_source.html" %}
+
                 </div>
-
-                {% include "cinema/includes/inc_news_content.html" with content=news.description|linebreaks %}
-
               </div>
             </div>
           </div>
@@ -38,9 +43,10 @@
   </div>
   <div class="col-md-3">
 
-    {% include "cinema/includes/inc_news_top_rated_by_imdb.html" %}
-    {% include "cinema/includes/inc_news_top_rated_by_budget.html" %}
-    {% include "cinema/includes/inc_news_top_rated_by_usa_gross.html" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 rated IMDb movies" top_5=imdb_top_5 criterion="imdb_top_5" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 most expensive movies" top_5=budget_top_5 criterion="budget_top_5" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 most USA grossing movies" top_5=usa_gross_top_5 criterion="usa_gross_top_5" %}
+  {% include "cinema/includes/inc_top_5_films.html" with title="Top 5 most world grossing movies" top_5=world_gross_top_5 criterion="world_gross_top_5" %}
 
   </div>
 </div>
